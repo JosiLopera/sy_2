@@ -33,7 +33,26 @@ class DefaultController extends Controller
     		$em = $this->getDoctrine()->getManager();
     		$em->persist($image);
     		$em->flush();
+
+    		$image->getTempFile()->move(
+	            $image->getPathtoUploads()."/originals", 
+	            $image->getFilename()
+	        );
+
+	        $img = new \abeautifulsite\SimpleImage(
+	            $image->getPathtoUploads()."/originals/".$image->getFilename()
+	        );
+
+	        $img->best_fit(600,600)->save(
+	            $image->getPathtoUploads()."/mediums/".$image->getFilename()
+	        );
+
+	        $img->thumbnail(60,60)->save(
+	            $image->getPathtoUploads()."/thumbnails/".$image->getFilename()
+	        );
     	}
+
+
 
     	$params = array(
     			"uploadForm" => $uploadForm->createView()

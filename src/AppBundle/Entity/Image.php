@@ -102,12 +102,11 @@ class Image
         $this->setIsPublish(true);
         $this->setDateCreated(new \DateTime());
         $this->setDateModified(new \DateTime());
+    }
 
-        $this->getTempFile()->move(
-            __DIR__."/../../../web/uploads/originals", 
-            $this->getFilename()
-        );
-
+    public function getPathtoUploads()
+    {
+        return __DIR__."/../../../web/uploads/";
     }
 
     /**
